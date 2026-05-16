@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고재광 교수 | OHZI Interactive Portfolio</title>
+    <meta name="description" content="동양미래대학교 로봇소프트웨어과 고재광 교수의 3D 인터랙티브 포트폴리오.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loader">
+        <div class="loader-content">
+            <h2 class="prompt-text">Warping to Reality...</h2>
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+
+    <canvas id="webgl-canvas"></canvas>
+
+    <div id="app">
+        <!-- Main Navigation (Home) -->
+        <nav id="home-nav">
+            <div class="home-menu">
+                <a href="#" class="menu-item" data-scene="dept">학과소개</a>
+                <a href="#" class="menu-item" data-scene="portfolio">나의 포트폴리오</a>
+                <a href="#" class="menu-item" data-scene="company">관련회사</a>
+                <a href="#" class="menu-item" data-scene="contact">게시판</a>
+            </div>
+            <div class="home-title">
+                <h1>KO JAEKWANG</h1>
+                <p>ROBOTICS SOFTWARE PROFESSOR</p>
+            </div>
+        </nav>
+
+        <!-- Section Contents (Hidden initially) -->
+        <div id="content-overlay">
+            <button class="back-btn">← BACK TO MENU</button>
+
+            <!-- 1. 학과소개 -->
+            <section id="dept" class="view-section left-align">
+                <h2 class="view-title">학과소개</h2>
+                <div class="glass-container">
+                    <h3>로봇자동화공학부 | 로봇소프트웨어과</h3>
+                    <p>동양미래대학교 (서울시 구로구 경인로 445)</p>
+                    <p class="desc">
+                        미래 지능형 로봇 시대를 선도하는 로봇 소프트웨어 전문가 양성의 요람.<br>
+                        현장 중심의 교육과 최첨단 자동화 실습 환경을 제공합니다.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 2. 나의 포트폴리오 -->
+            <section id="portfolio" class="view-section left-align">
+                <h2 class="view-title">나의 포트폴리오</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="98.5" data-suffix="%">0</span>
+                        <span class="stat-label">Vision AI 객체 인식률</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="22" data-suffix="%">0</span>
+                        <span class="stat-label">공정 택트타임 단축</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="15.3" data-suffix="%">0</span>
+                        <span class="stat-label">웨이퍼 이송 효율 향상</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="8" data-prefix="35ms → " data-suffix="ms">35</span>
+                        <span class="stat-label">시스템 응답 지연 감소</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. 관련회사 -->
+            <section id="company" class="view-section left-align">
+                <h2 class="view-title">관련회사</h2>
+                <div class="company-list">
+                    <div class="company-item neon-purple">
+                        <h3>산업용 협동 로봇</h3>
+                        <p>산업체 멘토링 및 시운전 알고리즘 검증</p>
+                    </div>
+                    <div class="company-item neon-cyan">
+                        <h3>반도체 장비 S/W</h3>
+                        <p>H사 / S사 반도체 생산 라인 소프트웨어 최적화</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. 게시판 -->
+            <section id="contact" class="view-section right-align">
+                <div class="contact-header">
+                    <p class="tagline">WHERE WILL YOUR STORY GO NEXT?</p>
+                    <h2 class="view-title">GUESTBOOK</h2>
+                </div>
+                <div class="contact-info">
+                    <p>Email: <strong>hong.robotics@email.com</strong></p>
+                    <p>Location: <strong>동양미래대학교</strong></p>
+                </div>
+                <div class="guestbook-form">
+                    <h3>동료 한 줄 평</h3>
+                    <div id="fb-status" class="status-msg">Firebase 연결 중...</div>
+                    <form id="board-form">
+                        <input type="text" id="user-name" placeholder="Name" required>
+                        <textarea id="user-msg" placeholder="Your Message" required></textarea>
+                        <div class="form-footer">
+                            <label for="user-photo" class="upload-btn">PHOTO UPLOAD</label>
+                            <input type="file" id="user-photo" accept="image/*" style="display:none">
+                            <button type="submit" class="submit-btn">SEND</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

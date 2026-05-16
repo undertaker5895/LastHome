@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DefenseTIFY v4.0 | 차세대 전술 인터페이스</title>
+    <link rel="stylesheet" href="defense.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Security Warning Modal (FORCED RECOVERY) -->
+    <div class="security-modal-overlay" id="security-modal">
+        <div class="modal-content-box">
+            <h1 class="neon-red">RESTRICTED ACCESS</h1>
+            <p class="warning-text">
+                [대한민국 군사보안 수칙 제1조]<br><br>
+                본 플랫폼은 19세 이상의 성인 또는 정부/국방부로부터 공식 인가받은 방위산업 기관만 이용할 수 있습니다.<br>
+                무단 접속 및 기밀 탈취 시 법적 처벌을 받습니다.
+            </p>
+            <button id="btn-authorize" class="auth-btn">접속 승인 (ACCESS AUTHORIZED)</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo" onclick="window.location.href='defense.html'">Defense<span>TIFY</span></div>
+        <div class="cart-btn" id="cart-trigger">
+            <span>TACTICAL_CORE_v4.0</span>
+            <span id="cart-count">0</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="grid-container" id="product-grid">
+            <!-- Item 01 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_01_cheongung.jpg" alt="천궁Ⅱ" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">TARGET_LOCKED</div>
+                    </div>
+                </div>
+                <div class="manufacturer">LIG 디펜스</div>
+                <div class="product-name neon-cyan">천궁Ⅱ (중거리 지대공 유도무기)</div>
+                <div class="price">$15,000,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 02 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_02_bigung.jpg" alt="비궁" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">PONIARD_CALIBRATED</div>
+                    </div>
+                </div>
+                <div class="manufacturer">LIG 디펜스</div>
+                <div class="product-name neon-cyan">비궁 (2.75인치 유도로켓)</div>
+                <div class="price">$2,500,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 03 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_03_haeseong.jpg" alt="해성" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">ANTI_SHIP_SCAN</div>
+                    </div>
+                </div>
+                <div class="manufacturer">LIG 디펜스</div>
+                <div class="product-name neon-cyan">해성 (중거리 함대함 미사일)</div>
+                <div class="price">$5,000,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 04 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_04_shingung.jpg" alt="신궁" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">MANPADS_READY</div>
+                    </div>
+                </div>
+                <div class="manufacturer">LIG 디펜스</div>
+                <div class="product-name neon-cyan">신궁 (휴대용 지대공 유도무기)</div>
+                <div class="price">$1,200,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 05 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_05_cheonma.jpg" alt="천마" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">SAM_ACTIVE</div>
+                    </div>
+                </div>
+                <div class="manufacturer">LIG 디펜스</div>
+                <div class="product-name neon-cyan">천마 (지대공 유도무기)</div>
+                <div class="price">$8,500,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 06 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_06_torpedo.jpg" alt="최신형 중어뢰" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">SONAR_TRACKING</div>
+                    </div>
+                </div>
+                <div class="manufacturer">LIG 디펜스</div>
+                <div class="product-name neon-cyan">최신형 중어뢰</div>
+                <div class="price">$3,000,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 07 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_07_prc999k.jpg" alt="PRC-999K" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">COMMS_ENCRYPTED</div>
+                    </div>
+                </div>
+                <div class="manufacturer">LIG 디펜스</div>
+                <div class="product-name neon-cyan">PRC-999K (차세대 FM 무전기)</div>
+                <div class="price">$15,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 08 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_08_tps830k.jpg" alt="TPS-830K" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">RADAR_SWEEPING</div>
+                    </div>
+                </div>
+                <div class="manufacturer">LIG 디펜스</div>
+                <div class="product-name neon-cyan">TPS-830K (저고도 탐지레이더)</div>
+                <div class="price">$4,200,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 09 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_09_gps100.jpg" alt="GPS-100" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">MARINE_RADAR_v4</div>
+                    </div>
+                </div>
+                <div class="manufacturer">LIG 디펜스</div>
+                <div class="product-name neon-cyan">GPS-100 (해상감시레이다)</div>
+                <div class="price">$1,800,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 10 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_10_vulcan.jpg" alt="발칸레이다" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">VULCAN_FC_SYNC</div>
+                    </div>
+                </div>
+                <div class="manufacturer">LIG 디펜스</div>
+                <div class="product-name neon-cyan">발칸레이다 시스템</div>
+                <div class="price">$2,100,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 11 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_11_mx908.jpg" alt="MX908" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">CHEMICAL_TRACE_v2</div>
+                    </div>
+                </div>
+                <div class="manufacturer">HKC</div>
+                <div class="product-name neon-cyan">MX908 (신형 화학작용제 탐지장비)</div>
+                <div class="price">$85,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 12 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_12_kcam2.jpg" alt="K-CAM2" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">CBRN_MONITORING</div>
+                    </div>
+                </div>
+                <div class="manufacturer">HKC</div>
+                <div class="product-name neon-cyan">K-CAM2 (화학작용제 탐지장비)</div>
+                <div class="price">$45,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 13 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_13_cbms.jpg" alt="CBMS" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">AUTO_DETECTION_ON</div>
+                    </div>
+                </div>
+                <div class="manufacturer">HKC</div>
+                <div class="product-name neon-cyan">CBMS (화생겸용자동탐지기)</div>
+                <div class="price">$120,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 14 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_14_km8k2.jpg" alt="KM8K2" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">ALARM_SYSTEM_READY</div>
+                    </div>
+                </div>
+                <div class="manufacturer">HKC</div>
+                <div class="product-name neon-cyan">KM8K2 (화학작용제자동경보기)</div>
+                <div class="price">$60,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 15 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_15_pdr1k.jpg" alt="PDR-1K" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">RADIATION_DOSAGE_v1</div>
+                    </div>
+                </div>
+                <div class="manufacturer">HKC</div>
+                <div class="product-name neon-cyan">PDR-1K (방사능측정기)</div>
+                <div class="price">$35,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 16 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_16_khh80a1.jpg" alt="KHH-80A1" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">ANR_AUDIO_LINK</div>
+                    </div>
+                </div>
+                <div class="manufacturer">HKC</div>
+                <div class="product-name neon-cyan">KHH-80A1 (ANR CVC 헬멧)</div>
+                <div class="price">$8,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 17 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_17_smart_helmet.jpg" alt="스마트형 승무원헬멧" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">VISOR_SYNC_COMPLETE</div>
+                    </div>
+                </div>
+                <div class="manufacturer">HKC</div>
+                <div class="product-name neon-cyan">스마트형 승무원헬멧 (유무선)</div>
+                <div class="price">$12,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 18 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_18_as992k.jpg" alt="AS-992K" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">SIGNAL_STRENGTH_MAX</div>
+                    </div>
+                </div>
+                <div class="manufacturer">HKC</div>
+                <div class="product-name neon-cyan">AS-992K (광대역안테나)</div>
+                <div class="price">$25,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 19 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_19_pde150k.jpg" alt="PDE-150K" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">IGNITION_SEQ_ARMED</div>
+                    </div>
+                </div>
+                <div class="manufacturer">HKC</div>
+                <div class="product-name neon-cyan">PDE-150K (폭파기구셋)</div>
+                <div class="price">$5,000</div>
+                <button class="add-btn">ADD</button>
+            </div>
+            <!-- Item 20 -->
+            <div class="product-card">
+                <div class="card-image-hud">
+                    <img src="weapon_20_km18a1.jpg" alt="KM18A1" class="weapon-img">
+                    <div class="scanline"></div>
+                    <div class="hud-text-layer">
+                        <div class="hud-tag">[ANALYZING_SYSTEM_v2.1]</div>
+                        <div class="hud-tag">ANTI_PERS_MINE_READY</div>
+                    </div>
+                </div>
+                <div class="manufacturer">HKC</div>
+                <div class="product-name neon-cyan">KM18A1 (대인지뢰 발화장치)</div>
+                <div class="price">$3,500</div>
+                <button class="add-btn">ADD</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast-container"></div>
+
+    <script src="defense.js"></script>
+</body>
+</html>

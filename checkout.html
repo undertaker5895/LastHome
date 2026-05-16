@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DefenseTIFY | 보안 터널</title>
+    <link rel="stylesheet" href="defense.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="checkout-wrapper">
+        <div class="receipt-container" style="text-align: center; border-color: var(--cyan);">
+            <div class="spinner" style="margin: 0 auto 30px;"></div>
+            <h2 id="sequencer-title" class="neon-cyan neon-text" style="letter-spacing: 5px;">기밀 데이터 전송 중...</h2>
+            <p style="opacity: 0.5; margin-top: 15px; font-size: 0.8rem;">[SYSTEM_STATUS: ENCRYPTING_SESSION_DATA]</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const titleNode = document.getElementById('sequencer-title');
+            const wrapper = document.querySelector('.checkout-wrapper');
+
+            // 2.5초 후 네온 퍼플 무드로 전환 및 상태 업데이트
+            setTimeout(() => {
+                if (wrapper) wrapper.classList.add('purple-mode');
+                if (titleNode) {
+                    titleNode.textContent = "1급 기밀 보안 연결 완료";
+                    titleNode.className = "neon-purple neon-text";
+                }
+            }, 2500);
+
+            // 3.5초 후 장바구니 페이지로 강제 리다이렉트
+            setTimeout(() => {
+                window.location.href = "cart.html";
+            }, 3500);
+        });
+    </script>
+</body>
+</html>

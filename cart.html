@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DefenseTIFY | 결제 터미널</title>
+    <link rel="stylesheet" href="defense.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo" onclick="window.location.href='defense.html'">Defense<span>TIFY</span></div>
+    </header>
+
+    <div class="cart-wrapper">
+        <div class="receipt-container">
+            <div class="receipt-header">
+                <h1 class="neon-cyan neon-text">TACTICAL RECEIPT</h1>
+                <p style="opacity: 0.5; font-size: 0.8rem; margin-top: 5px;">SESSION_ID: DT-DYNAMIC-SYNC</p>
+            </div>
+
+            <!-- Dynamic Cart Body -->
+            <div class="receipt-body" id="dynamic-cart-body">
+                <!-- Items will be injected here by defense.js -->
+            </div>
+
+            <div class="receipt-total">
+                <span>TOTAL PAYABLE</span>
+                <span id="cart-total-price" class="neon-cyan">$0</span>
+            </div>
+
+            <button class="confirm-btn">최종 발주 승인 (CONFIRM ORDER)</button>
+            
+            <p style="text-align: center; font-size: 0.65rem; opacity: 0.3; margin-top: 10px;">
+                WARNING: THIS IS A CLASSIFIED DOCUMENT. DATA SYNCED FROM LOCALSTORAGE.
+            </p>
+        </div>
+    </div>
+
+    <script src="defense.js"></script>
+</body>
+</html>

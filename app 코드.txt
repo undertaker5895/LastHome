@@ -1,0 +1,269 @@
+/**
+ * OHZI Style 3D Interactive Portfolio
+ * Developed by Antigravity
+ */
+
+// --- 1. Scene Setup ---
+const canvas = document.querySelector('#webgl-canvas');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+// --- 2. State & Objects ---
+let currentScene = 'home';
+let targetColor = new THREE.Color(0xa855f7); // Purple default
+const group = new THREE.Group();
+scene.add(group);
+
+// Warp Particles
+const warpCount = 3000;
+const warpGeometry = new THREE.BufferGeometry();
+const warpPositions = new Float32Array(warpCount * 3);
+const warpVelocities = new Float32Array(warpCount);
+
+for (let i = 0; i < warpCount; i++) {
+    warpPositions[i * 3] = (Math.random() - 0.5) * 50;
+    warpPositions[i * 3 + 1] = (Math.random() - 0.5) * 50;
+    warpPositions[i * 3 + 2] = Math.random() * -100;
+    warpVelocities[i] = 0.1 + Math.random() * 0.5;
+}
+warpGeometry.setAttribute('position', new THREE.BufferAttribute(warpPositions, 3));
+const warpMaterial = new THREE.PointsMaterial({ size: 0.05, color: 0xffffff, transparent: true, opacity: 0 });
+const warpPoints = new THREE.Points(warpGeometry, warpMaterial);
+scene.add(warpPoints);
+
+// Home: Floating Cube
+const cubeGeom = new THREE.BoxGeometry(4, 4, 4);
+const cubeMat = new THREE.MeshPhongMaterial({ color: 0xa855f7, wireframe: true, shininess: 100 });
+const mainCube = new THREE.Mesh(cubeGeom, cubeMat);
+mainCube.position.set(10, 0, 0);
+group.add(mainCube);
+
+// Lights
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+const pointLight = new THREE.PointLight(0xffffff, 1);
+pointLight.position.set(10, 10, 10);
+scene.add(pointLight);
+
+camera.position.z = 20;
+
+// --- 3. Scene Generators ---
+
+const clearGroup = () => {
+    while(group.children.length > 0){ 
+        group.remove(group.children[0]); 
+    }
+};
+
+const createEnvironment = (type) => {
+    clearGroup();
+    scene.fog = null;
+    
+    switch(type) {
+        case 'home':
+            group.add(mainCube);
+            targetColor.set(0xa855f7);
+            break;
+            
+        case 'dept': // Red Mountains
+            const mGeom = new THREE.PlaneGeometry(100, 100, 50, 50);
+            const mPos = mGeom.attributes.position.array;
+            for(let i=0; i<mPos.length; i+=3) mPos[i+2] = Math.sin(mPos[i]/5) * Math.cos(mPos[i+1]/5) * 5;
+            const mMat = new THREE.MeshPhongMaterial({ color: 0xff0000, wireframe: true });
+            const mountains = new THREE.Mesh(mGeom, mMat);
+            mountains.rotation.x = -Math.PI / 2;
+            mountains.position.y = -10;
+            group.add(mountains);
+            // Neon Ring
+            const ringG = new THREE.TorusGeometry(8, 0.1, 16, 100);
+            const ringM = new THREE.MeshBasicMaterial({ color: 0xff3333 });
+            const ring = new THREE.Mesh(ringG, ringM);
+            ring.position.set(10, 0, -10);
+            group.add(ring);
+            targetColor.set(0xff3333);
+            break;
+            
+        case 'portfolio': // Underwater
+            scene.fog = new THREE.FogExp2(0x06b6d4, 0.05);
+            const dGeom = new THREE.OctahedronGeometry(6, 0);
+            const dMat = new THREE.MeshPhongMaterial({ color: 0x06b6d4, wireframe: true });
+            const diamond = new THREE.Mesh(dGeom, dMat);
+            diamond.position.set(0, 0, 0);
+            group.add(diamond);
+            targetColor.set(0x06b6d4);
+            break;
+            
+        case 'company': // Desert
+            const dPlaneG = new THREE.PlaneGeometry(100, 100, 20, 20);
+            const dPlaneM = new THREE.MeshPhongMaterial({ color: 0xf97316, wireframe: true });
+            const desert = new THREE.Mesh(dPlaneG, dPlaneM);
+            desert.rotation.x = -Math.PI / 2;
+            desert.position.y = -10;
+            group.add(desert);
+            // Inverted Pyramid
+            const pGeom = new THREE.ConeGeometry(8, 12, 4);
+            const pMat = new THREE.MeshPhongMaterial({ color: 0xffaa00, wireframe: true });
+            const pyramid = new THREE.Mesh(pGeom, pMat);
+            pyramid.rotation.x = Math.PI;
+            pyramid.position.set(0, 5, -10);
+            group.add(pyramid);
+            targetColor.set(0xf97316);
+            break;
+            
+        case 'contact': // Green Space
+            const cGeom = new THREE.TorusGeometry(10, 0.5, 16, 100);
+            const cMat = new THREE.MeshBasicMaterial({ color: 0x22c55e });
+            const circle = new THREE.Mesh(cGeom, cMat);
+            circle.position.set(-10, 0, -5);
+            group.add(circle);
+            // Placeholder Astronaut (Sphere)
+            const aGeom = new THREE.SphereGeometry(3, 32, 32);
+            const aMat = new THREE.MeshPhongMaterial({ color: 0x22c55e, wireframe: true });
+            const astro = new THREE.Mesh(aGeom, aMat);
+            astro.position.set(-10, 0, -5);
+            group.add(astro);
+            targetColor.set(0x22c55e);
+            break;
+    }
+};
+
+// --- 4. Transition Logic ---
+
+let isWarping = false;
+let warpSpeed = 0.2;
+
+const triggerWarp = (nextScene) => {
+    isWarping = true;
+    currentScene = 'warp';
+    
+    // UI Out
+    gsap.to('#home-nav, #content-overlay', { opacity: 0, duration: 0.5, onComplete: () => {
+        document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+        if(nextScene !== 'home') document.getElementById(nextScene).classList.add('active');
+    }});
+
+    // Warp Speed Up
+    gsap.to(warpMaterial, { opacity: 1, duration: 0.5 });
+    gsap.to(window, { 
+        duration: 2, 
+        onUpdate: () => { warpSpeed += 0.05; },
+        onComplete: () => {
+            warpSpeed = 0.2;
+            createEnvironment(nextScene);
+            gsap.to(warpMaterial, { opacity: 0, duration: 0.5 });
+            isWarping = false;
+            
+            // UI In
+            if(nextScene === 'home') {
+                gsap.to('#home-nav', { opacity: 1, duration: 1 });
+            } else {
+                gsap.to('#content-overlay', { opacity: 1, duration: 1, pointerEvents: 'auto' });
+                if(nextScene === 'portfolio') startCountUp();
+            }
+        }
+    });
+};
+
+// --- 5. Interactivity ---
+
+document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sceneName = item.getAttribute('data-scene');
+        triggerWarp(sceneName);
+    });
+});
+
+document.querySelector('.back-btn').addEventListener('click', () => {
+    gsap.to('#content-overlay', { opacity: 0, pointerEvents: 'none', duration: 0.5 });
+    triggerWarp('home');
+});
+
+const startCountUp = () => {
+    document.querySelectorAll('.stat-number').forEach(stat => {
+        const target = parseFloat(stat.getAttribute('data-target'));
+        const suffix = stat.getAttribute('data-suffix') || '';
+        const prefix = stat.getAttribute('data-prefix') || '';
+        let obj = { val: prefix ? 35 : 0 };
+        gsap.to(obj, {
+            val: target, duration: 2, ease: 'power2.out',
+            onUpdate: () => stat.innerText = prefix + obj.val.toFixed(target % 1 === 0 ? 0 : 1) + suffix
+        });
+    });
+};
+
+// --- 6. Animation Loop ---
+
+let mouseX = 0, mouseY = 0;
+window.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5);
+    mouseY = (e.clientY / window.innerHeight - 0.5);
+});
+
+const clock = new THREE.Clock();
+
+function animate() {
+    requestAnimationFrame(animate);
+    const delta = clock.getDelta();
+    const time = clock.getElapsedTime();
+
+    // Interaction
+    group.rotation.y += delta * 0.1 + mouseX * 0.05;
+    group.rotation.x += mouseY * 0.05;
+
+    // Warp Particles
+    const pos = warpGeometry.attributes.position.array;
+    for (let i = 0; i < warpCount; i++) {
+        pos[i * 3 + 2] += warpVelocities[i] + (isWarping ? warpSpeed : 0);
+        if (pos[i * 3 + 2] > 20) pos[i * 3 + 2] = -100;
+    }
+    warpGeometry.attributes.position.needsUpdate = true;
+    warpMaterial.color.lerp(targetColor, 0.05);
+
+    // Object Animations
+    if(group.children.length > 0) {
+        group.children.forEach(obj => {
+            obj.rotation.y += delta * 0.5;
+            if(obj.geometry.type === 'TorusGeometry') obj.rotation.z += delta;
+        });
+    }
+
+    renderer.render(scene, camera);
+}
+animate();
+
+// Loader Reveal
+window.addEventListener('load', () => {
+    gsap.to('.loader-bar', { width: '100%', duration: 1.5, onComplete: () => {
+        gsap.to('#loader', { opacity: 0, duration: 1, onComplete: () => document.getElementById('loader').remove() });
+    }});
+});
+
+// Resize
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// --- 7. Firebase Skeleton ---
+/*
+  Firebase Integration Skeleton
+  1. Add SDKs to index.html
+  2. Init Firebase with your config
+*/
+const fbStatus = document.getElementById('fb-status');
+setTimeout(() => fbStatus.innerText = "Firebase 연결 완료 (Skeleton)", 2000);
+
+document.getElementById('board-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    fbStatus.innerText = "데이터 전송 중...";
+    setTimeout(() => {
+        alert("댓글이 등록되었습니다! (Mock)");
+        fbStatus.innerText = "등록 완료";
+        e.target.reset();
+    }, 1000);
+});

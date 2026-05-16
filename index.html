@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KO JAEKWANG | 3D Interactive Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&family=Noto+Sans+KR:wght@300;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/BokehPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/BokehShader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <div id="loader">
+        <div class="loader-content">
+            <h1 class="glitch">INITIALIZING 3D UNIVERSE</h1>
+            <div class="progress-bar"><div class="progress"></div></div>
+        </div>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <div id="ui-layer">
+        <nav id="main-nav">
+            <div class="logo">CAD / STUDIO</div>
+            <ul>
+                <li data-scene="home" class="active">HOME</li>
+                <li data-scene="school">무기 제조 로드맵</li>
+                <li data-scene="portfolio">창조의 도구</li>
+                <li data-scene="company">관련회사</li>
+                <li data-scene="board">게시판</li>
+            </ul>
+        </nav>
+
+        <section id="section-home" class="active">
+            <div class="content left">
+                <h2 class="sub-title">2D, 3D work</h2>
+                <h1 class="main-title">CAD을 이용한 무기업체</h1>
+                <p class="description">Auto Cad, SolidWorks</p>
+                <div class="scroll-hint">CLICK A MENU TO EXPLORE</div>
+            </div>
+        </section>
+
+        <section id="section-school">
+            <div class="content left">
+                <h2 class="sub-title">EDUCATION & STRATEGY</h2>
+                <h1 class="main-title">무기 제조를 위한<br><span class="highlight">커리어 로드맵</span></h1>
+                
+                <div class="school-cards-wrapper">
+                    <div class="glass-container school-card">
+                        <div class="neon-purple">
+                            <h3>🎓 주요 추천 전공</h3>
+                            <p>기계·기계설계공학 : 무기체계 및 플랫폼 구조 설계</p>
+                            <p>항공우주공학 : 유도무기 및 드론 도메인 지식</p>
+                            <p>메카트로닉스공학 : 무인화 체계 및 기계·전자 융합 제어</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-container school-card">
+                        <div class="neon-cyan">
+                            <h3>🏫 학교 및 연구실 선정</h3>
+                            <p>거점 네트워크 : LIG 디펜스&에어로스페이스의 연구소 및 생산지 연계</p>
+                            <p>방산 특화 랩(Lab) : 카이스트, 한양대, 부산대 등 국방 프로젝트 수행 연구실</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-container school-card">
+                        <div class="neon-cyan">
+                            <h3>💻 필수 핵심 역량</h3>
+                            <p>3D CAD & 툴 활용 : CATIA, SolidWorks 등을 활용한 3D 모델링 및 최적화 설계 역량</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-container school-card">
+                        <div class="neon-purple">
+                            <h3>🏅 자격증</h3>
+                            <p>필수 : 일반기계기사, 기계설계기사 (설계 기초 증명)</p>
+                            <p>우대 : 전산응용기계제도기능사, 항공기사, 한국사능력검정</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-container school-card">
+                        <div class="neon-cyan">
+                            <h3>🚀 차별화 포인트</h3>
+                            <p>프로젝트 : 국방 및 항공우주 관련 캡스톤 디자인 수행</p>
+                            <p>경진대회 : 자율주행 드론, 로봇 공학 관련 입상 이력</p>
+                            <p>보안 의식 : 방산업계 종사자로서의 철저한 보안 마인드</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-portfolio">
+            <div class="content left">
+                <h2 class="sub-title">CORE TECHNOLOGIES</h2>
+                <h1 class="main-title">창조의 도구</h1>
+                
+                <div class="tools-grid">
+                    <div class="glass-container tool-card">
+                        <div class="neon-purple">
+                            <h3>🛠 CATIA V5 / V6</h3>
+                            <p><strong>도메인:</strong> 기구 설계 및 플랫폼 구조 설계</p>
+                            <p>무기체계 및 정밀 기계 부품의 3D 모델링 및 최적화 설계 역량</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-container tool-card">
+                        <div class="neon-cyan">
+                            <h3>🔬 ANSYS / Abaqus</h3>
+                            <p><strong>도메인:</strong> 구조 및 열-유동 시뮬레이션</p>
+                            <p>방위산업 기기 안정성 확보를 위한 유한요소해석(FEA) 수행</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-container tool-card">
+                        <div class="neon-cyan">
+                            <h3>⚙️ SolidWorks / Inventor</h3>
+                            <p><strong>도메인:</strong> 메카트로닉스 및 무인 체계 설계</p>
+                            <p>자동화 시스템 및 로봇 구조물의 3D 설계 및 간섭 체크 최적화</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-container tool-card">
+                        <div class="neon-purple">
+                            <h3>🐍 Python / MATLAB</h3>
+                            <p><strong>도메인:</strong> 알고리즘 및 궤적 분석</p>
+                            <p>유도무기 및 드론 시스템의 데이터 분석 및 제어 로직 구현</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 50px; text-align: center; width: 100%; position: relative; z-index: 99999; pointer-events: auto;">
+                    <h3 style="font-size: 0.85rem; color: #00f2ff; margin-bottom: 12px; letter-spacing: 4px; font-family: 'Orbitron', sans-serif;">
+                        [ CLASSIFIED PROJECT ]
+                    </h3>
+                    <a href="defense.html" target="_blank" style="
+                        background: rgba(0, 242, 255, 0.1); 
+                        border: 1px solid #00f2ff; 
+                        color: #fff; 
+                        box-shadow: 0 0 20px rgba(0, 242, 255, 0.4); 
+                        text-transform: uppercase; 
+                        letter-spacing: 2px;
+                        font-weight: 900;
+                        padding: 15px 35px;
+                        display: inline-block;
+                        text-decoration: none;
+                        border-radius: 4px;
+                        transition: all 0.3s ease;
+                        cursor: pointer;
+                        position: relative;
+                        z-index: 99999;
+                        pointer-events: auto;
+                    " 
+                    onmouseover="this.style.background='#00f2ff'; this.style.color='#000'; this.style.boxShadow='0 0 30px #00f2ff';" 
+                    onmouseout="this.style.background='rgba(0, 242, 255, 0.1)'; this.style.color='#fff'; this.style.boxShadow='0 0 20px rgba(0, 242, 255, 0.4)';">
+                        ▶ DefenseTIFY 전술 인터페이스 접속
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-company">
+            <div class="content left">
+                <h2 class="sub-title">PRECISE, INNOVATIVE CRAFTSMANSHIP</h2>
+                <h1 class="main-title">INDUSTRIAL PARTNERS</h1>
+                
+                <div class="company-cards-wrapper">
+                    <div class="glass-container company-card">
+                        <div class="neon-purple">
+                            <h3>🚀 타겟 기업 1 : LIG 디펜스&에어로스페이스</h3>
+                            <p><strong>기업 비전:</strong> 글로벌 방산기업으로 도약하는 첨단 종합 방위산업 리더</p>
+                            <p><strong>주요 사업:</strong> 유도무기(천궁Ⅱ), 무인화 플랫폼, 항공전자·드론 등</p>
+                            <a href="https://www.ligdefenseaerospace.com/main.do" target="_blank" class="btn-card-glow">LIG</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-container company-card">
+                        <div class="neon-cyan">
+                            <h3>📡 타겟 기업 2 : 에이치케이씨 (HKC)</h3>
+                            <p><strong>기업 비전:</strong> 60년 기술력의 통신전자 및 화생방 핵심기술 전문기업</p>
+                            <p><strong>주요 사업:</strong> 신형 탐지장비, 스마트 헬멧, AI 기반 소리분석 및 레이저 통신</p>
+                            <a href="https://www.hkci.co.kr/" target="_blank" class="btn-card-glow">HKC</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-container company-card">
+                        <div class="neon-purple">
+                            <h3>🎯 포트폴리오 타겟팅 전략</h3>
+                            <p><strong>전략:</strong> LIG의 '미래전 플랫폼'과 HKC의 'AI 융합 기술'을 잇는 메카트로닉스 설계 역량 강조</p>
+                            <a href="https://fucccc-eta.vercel.app/" target="_blank" class="btn-card-glow">포트폴리오 예시</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-board">
+            <div class="content right">
+                <h2 class="sub-title">JOIN THE JOURNEY</h2>
+                <h1 class="main-title">WHERE WILL YOUR<br><span class="highlight">STORY GO NEXT?</span></h1>
+                <p class="description">Email: <strong>jaekwang.ko@dongyang.ac.kr</strong></p>
+                
+                <div class="board-form">
+                    <h3 style="margin-bottom: 15px; font-weight: 600;">동료 한 줄 평</h3>
+                    <div id="fb-status">STATUS: <span class="status-online">READY TO CONNECT</span></div>
+                    
+                    <!-- New Message Container -->
+                    <div id="message-board" class="message-board"></div>
+
+                    <textarea id="message-input" placeholder="함께 나아갈 다음 단계를 적어주세요..."></textarea>
+                    <div class="form-footer">
+                        <label for="file-upload" class="btn-secondary">파일/사진 업로드</label>
+                        <input type="file" id="file-upload" hidden>
+                        <button id="submit-btn" class="btn-primary">보내기</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="btn-back" class="hidden">← BACK</div>
+    </div>
+
+    <div id="transition-overlay"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

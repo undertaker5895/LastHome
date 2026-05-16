@@ -1,0 +1,582 @@
+/* style.css */
+:root {
+    --bg-dark: #000000;
+    --text-main: #ffffff;
+    --text-sub: rgba(255, 255, 255, 0.6);
+    --accent: #ffffff;
+    --accent-purple: #a855f7;
+    --accent-cyan: #06b6d4;
+    --font-main: 'Outfit', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Loader */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1s ease;
+}
+
+.loader-content { text-align: center; }
+.glitch { font-size: 1.2rem; letter-spacing: 5px; margin-bottom: 20px; }
+.progress-bar { width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin: 0 auto; overflow: hidden; }
+.progress { width: 0%; height: 100%; background: #fff; }
+
+/* Canvas */
+#canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#ui-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Navigation (좌측 고정 및 중앙 정렬 적용) */
+#main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    padding: 0 40px;
+    pointer-events: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo {
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 5px;
+    margin-bottom: 60px;
+    opacity: 0.8;
+}
+
+#main-nav ul { list-style: none; }
+#main-nav li {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+    cursor: pointer;
+    color: var(--text-sub);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#main-nav li:hover, #main-nav li.active {
+    color: var(--text-main);
+    transform: translateX(10px);
+}
+
+#main-nav li.active {
+    font-weight: 600;
+}
+
+/* Sections (네비게이션 너비만큼 패딩을 주어 겹침 방지 및 가로 중앙 정렬) */
+section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 280px; 
+    padding-right: 50px;
+    opacity: 0;
+    visibility: hidden;
+    /* GSAP 제어를 위해 translateY 초기화 */
+    transform: translateY(0);
+}
+
+section.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* 콘텐츠 영역 중심 정렬 및 GSAP 애니메이션 최적화 */
+.content { 
+    max-width: 700px; 
+    width: 100%;
+    margin: 0 auto; 
+    text-align: center; 
+    transform-origin: center center;
+    transition: opacity 0.8s ease, visibility 0.8s ease; 
+    will-change: transform, opacity, filter;
+}
+.content.left, .content.right { 
+    margin: 0 auto; 
+    text-align: center; 
+}
+
+/* Section specific content width */
+#section-school .content {
+    max-width: 1000px;
+}
+
+#section-company .content {
+    max-width: 1200px;
+}
+
+#section-portfolio .content {
+    max-width: 900px;
+}
+
+
+
+
+.sub-title {
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-sub);
+    margin-bottom: 10px;
+}
+
+.main-title {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 30px;
+}
+
+.highlight {
+    -webkit-text-stroke: 1px #fff;
+    color: transparent;
+}
+
+.description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-sub);
+    margin-bottom: 40px;
+}
+
+/* UI Elements 중앙 정렬을 위한 여백 처리 */
+.btn-glow {
+    display: inline-block;
+    padding: 15px 40px;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.btn-glow:hover {
+    background: #fff;
+    color: #000;
+}
+
+.stats-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 30px; 
+    margin: 0 auto; 
+}
+.stat-item { font-size: 2.5rem; font-weight: 900; }
+.stat-item p { font-size: 0.9rem; color: var(--text-sub); font-weight: 300; }
+
+.glass-box {
+    background: rgba(255,255,255,0.05);
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    margin: 0 auto;
+}
+
+.glass-box p { margin-bottom: 15px; font-size: 1.1rem; }
+
+/* School & Company Cards Layout & Scroll Fix */
+.school-cards-wrapper, .company-cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 40px;
+    width: 100%;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 15px; /* Scrollbar space */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* Custom Scrollbar */
+.school-cards-wrapper::-webkit-scrollbar, .company-cards-wrapper::-webkit-scrollbar {
+    width: 5px;
+}
+
+.school-cards-wrapper::-webkit-scrollbar-track, .company-cards-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.school-cards-wrapper::-webkit-scrollbar-thumb, .company-cards-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+.school-cards-wrapper::-webkit-scrollbar-thumb:hover, .company-cards-wrapper::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+
+.glass-container {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: clamp(1.2rem, 2vw, 2rem);
+    border-radius: 15px;
+    transition: transform 0.3s ease, background 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.school-card, .company-card, .tool-card {
+    text-align: left;
+    height: 100%;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
+}
+
+.school-card:hover, .company-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-10px);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+}
+
+/* Tools Specific 3D Physics */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 40px;
+    width: 100%;
+    perspective: 1000px;
+}
+
+.tool-card {
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), background 0.4s ease;
+}
+
+.tool-card:hover {
+    transform: rotateX(8deg) rotateY(4deg) translateZ(10px);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.tool-card h3 { transition: transform 0.4s ease; }
+.tool-card:hover h3 { transform: translateZ(30px); text-shadow: 0 0 15px rgba(255,255,255,0.5); }
+.tool-card p { transition: transform 0.4s ease; }
+.tool-card:hover p { transform: translateZ(15px); }
+
+
+
+.school-card h3 {
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    margin-bottom: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.school-card p {
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    color: var(--text-sub);
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+/* Neon Point Styles & Hover Effects */
+.neon-purple {
+    border-left: 3px solid var(--accent-purple);
+    padding-left: 20px;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.neon-cyan {
+    border-left: 3px solid var(--accent-cyan);
+    padding-left: 20px;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.neon-purple:hover, .school-card:hover .neon-purple {
+    border-left: 3px solid #fff;
+    box-shadow: -10px 0 30px rgba(168, 85, 247, 0.5);
+}
+
+.neon-cyan:hover, .school-card:hover .neon-cyan {
+    border-left: 3px solid #fff;
+    box-shadow: -10px 0 30px rgba(6, 182, 212, 0.5);
+}
+
+.neon-purple:hover h3, .school-card:hover .neon-purple h3 { color: #fff; text-shadow: 0 0 10px var(--accent-purple); }
+.neon-cyan:hover h3, .school-card:hover .neon-cyan h3 { color: #fff; text-shadow: 0 0 10px var(--accent-cyan); }
+
+/* Card Button Styling */
+.btn-card-glow {
+    display: inline-block;
+    padding: 10px 25px;
+    margin-top: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    background: transparent;
+    text-transform: uppercase;
+    align-self: flex-start;
+}
+
+.btn-card-glow:hover {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.neon-purple .btn-card-glow:hover {
+    background: var(--accent-purple);
+    border-color: var(--accent-purple);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+}
+
+.neon-cyan .btn-card-glow:hover {
+    background: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+}
+
+
+/* Guestbook */
+.board-form {
+    background: rgba(255,255,255,0.05);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: left;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#fb-status { font-size: 0.7rem; margin-bottom: 15px; color: var(--text-sub); }
+.status-online { color: #22c55e; }
+
+textarea {
+    width: 100%;
+    height: 120px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    resize: none;
+    margin-bottom: 15px;
+    font-family: inherit;
+}
+
+.form-footer { display: flex; justify-content: center; gap: 15px; align-items: center; }
+.btn-primary { background: #fff; color: #000; border: none; padding: 10px 25px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+.btn-secondary { font-size: 0.9rem; cursor: pointer; color: var(--text-sub); border-bottom: 1px solid var(--text-sub); }
+
+/* Cursor */
+#cursor {
+    width: 15px; height: 15px; background: #fff; border-radius: 50%;
+    position: fixed; pointer-events: none; z-index: 9999;
+    mix-blend-mode: difference; transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+}
+
+#btn-back {
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.3s;
+    pointer-events: auto;
+    z-index: 101;
+}
+
+#btn-back:hover { opacity: 1; }
+.hidden { opacity: 0 !important; pointer-events: none !important; }
+
+#transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 9000;
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* 모바일 최적화 (768px 이하) */
+@media (max-width: 768px) {
+    #main-nav { 
+        width: 110px; 
+        padding: 20px 10px;
+        background: rgba(0, 0, 0, 0.6); 
+        backdrop-filter: blur(10px);
+    }
+    
+    .logo {
+        font-size: 0.8rem;
+        margin-bottom: 40px;
+        text-align: center;
+        letter-spacing: 2px;
+    }
+    
+    #main-nav li {
+        font-size: 0.9rem;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    #btn-back { left: 20px; bottom: 20px; }
+    
+    section {
+        padding-left: 130px; 
+        padding-right: 20px;
+    }
+    
+    .main-title { font-size: 2rem; margin-bottom: 20px; }
+    .sub-title { font-size: 0.75rem; }
+    .description { font-size: 0.95rem; }
+    
+    .stats-grid { grid-template-columns: 1fr; gap: 15px; }
+    .stat-item { font-size: 1.8rem; }
+    
+    .glass-box { padding: 20px; }
+    .glass-box p { font-size: 0.9rem; }
+    
+    .board-form { padding: 20px; width: 100%; }
+    textarea { height: 90px; }
+}
+
+/* Message Board UI */
+.message-board {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.message-board::-webkit-scrollbar { width: 4px; }
+.message-board::-webkit-scrollbar-thumb { background: rgba(34, 197, 94, 0.5); border-radius: 4px; }
+
+.message-item {
+    background: rgba(0, 0, 0, 0.4);
+    border-left: 3px solid #22c55e;
+    padding: 12px 15px;
+    border-radius: 0 8px 8px 0;
+    color: #fff;
+    font-size: 0.9rem;
+    animation: slideIn 0.3s ease-out forwards;
+}
+.message-time {
+    display: block;
+    color: #22c55e;
+    font-size: 0.7rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Message Board Actions */
+.msg-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+.btn-msg-action {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-msg-action:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.btn-msg-action.edit:hover, .btn-msg-action.active-edit { border-color: #00f2ff; color: #00f2ff; }
+.btn-msg-action.delete:hover { border-color: #ff0055; color: #ff0055; }
+
+.edit-input-field {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid #00f2ff;
+    color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    display: none; /* 기본적으로 숨김 */
+    resize: none;
+    font-family: inherit;
+}
+
+@keyframes slideOut {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(10px); }
+}

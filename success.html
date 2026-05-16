@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DefenseTIFY | 발주 완료</title>
+    <link rel="stylesheet" href="defense.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;900&display=swap" rel="stylesheet">
+    <style>
+        .success-wrapper {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+        }
+        .mission-badge {
+            font-size: 5rem;
+            color: var(--cyan);
+            text-shadow: 0 0 30px var(--cyan);
+            margin-bottom: 20px;
+            animation: bounceIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-wrapper">
+        <div class="mission-badge">✔</div>
+        <h1 class="neon-cyan neon-text">MISSION ACCOMPLISHED</h1>
+        <p>전술 무기 체계 발주가 국방부 조달청으로 공식 접수되었습니다.</p>
+        <p style="opacity: 0.5;">[거래 일련번호: DT-8829-QX-01]</p>
+        
+        <button onclick="window.location.href='defense.html'" class="add-btn" style="width: auto; padding: 15px 50px; margin-top: 30px;">
+            전술 지휘소 복귀
+        </button>
+    </div>
+</body>
+</html>
