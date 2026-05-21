@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TACTICAL HUD - Anti-gravity Career Mindmap</title>
+  <link rel="stylesheet" href="Mind.css">
+</head>
+<body>
+
+  <!-- Cybernetic Grid & Radar Background -->
+  <div class="hud-bg-grid"></div>
+  <div class="hud-radar-overlay"></div>
+  <div class="hud-radar-circle outer"></div>
+  <div class="hud-radar-circle mid"></div>
+  <div class="hud-radar-circle inner"></div>
+
+  <!-- Scanline Screen Shaders -->
+  <div class="hud-scanline"></div>
+  <div class="hud-scanline-sweep"></div>
+
+  <!-- HUD Corner Brackets -->
+  <div class="hud-corner-bracket top-left"></div>
+  <div class="hud-corner-bracket top-right"></div>
+  <div class="hud-corner-bracket bottom-left"></div>
+  <div class="hud-corner-bracket bottom-right"></div>
+
+  <!-- HUD Top Header -->
+  <header class="hud-header">
+    <div class="hud-title-container">
+      <h1 class="hud-title-main">WEAPON SYSTEMS CAREER ROADMAP</h1>
+      <span class="hud-title-sub">3D ANTI-GRAVITY MINDMAP // HOLOGRAM SYSTEM v1.0.4</span>
+    </div>
+    <div class="hud-system-status">
+      <div class="hud-status-dot"></div>
+      <span id="system-time">SYS_TIME: 10:34:45</span>
+      <span>//</span>
+      <span>LINK: ESTABLISHED</span>
+    </div>
+  </header>
+
+  <!-- 3D Interactive Viewport -->
+  <div class="viewport-3d" id="viewport-3d">
+    <div class="mindmap-container" id="mindmap-container">
+      
+      <!-- SVG Connecting Web Layer -->
+      <svg class="mindmap-svg-layer" id="svg-layer">
+        <defs>
+          <!-- SVG Gradients for Connecting Flows -->
+          <linearGradient id="line-grad-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(0,255,255,1)" />
+            <stop offset="50%" stop-color="rgba(0,255,255,0.4)" />
+            <stop offset="100%" stop-color="rgba(0,255,255,0.05)" />
+          </linearGradient>
+          <linearGradient id="line-grad-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(189,0,255,1)" />
+            <stop offset="50%" stop-color="rgba(189,0,255,0.4)" />
+            <stop offset="100%" stop-color="rgba(189,0,255,0.05)" />
+          </linearGradient>
+          
+          <!-- Drop Shadow / Glow Filters -->
+          <filter id="glow-cyan-svg" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        
+        <!-- Group elements inside SVG for paths -->
+        <g id="links-group"></g>
+      </svg>
+      
+      <!-- DOM nodes will be appended here dynamically by JS -->
+      
+    </div>
+  </div>
+
+  <!-- HUD Sidebar (Dossier Panel) -->
+  <aside class="hud-sidebar" id="telemetry-sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">NODE TELEMETRY</span>
+      <button class="sidebar-close-btn" id="sidebar-close">CLOSE</button>
+    </div>
+    <div class="sidebar-content">
+      <div class="dossier-section">
+        <div class="dossier-node-type" id="node-type">BRANCH_LEVEL_1</div>
+        <div class="dossier-node-name" id="node-name">주요 추천 전공</div>
+      </div>
+      
+      <div class="dossier-section">
+        <span class="dossier-section-title">CORE OBJECTIVE</span>
+        <div class="dossier-node-desc" id="node-description">
+          무기 체계 설계 및 제조 분야의 주요 전공 로드맵 분석. 기계, 항공우주, 메카트로닉스 분야를 아우릅니다.
+        </div>
+      </div>
+
+      <div class="dossier-section">
+        <span class="dossier-section-title">SIMULATION TELEMETRY</span>
+        <div class="telemetry-row">
+          <span class="telemetry-label">COORDS_X:</span>
+          <span class="telemetry-val accent" id="tel-x">0.00 px</span>
+        </div>
+        <div class="telemetry-row">
+          <span class="telemetry-label">COORDS_Y:</span>
+          <span class="telemetry-val accent" id="tel-y">0.00 px</span>
+        </div>
+        <div class="telemetry-row">
+          <span class="telemetry-label">COORDS_Z (FLOAT):</span>
+          <span class="telemetry-val" id="tel-z">0.00 px</span>
+        </div>
+        <div class="telemetry-row">
+          <span class="telemetry-label">SIMULATED MASS:</span>
+          <span class="telemetry-val" id="tel-mass">1.00 kg</span>
+        </div>
+        <div class="telemetry-row">
+          <span class="telemetry-label">NODE STATE:</span>
+          <span class="telemetry-val" id="tel-state">ACTIVE_STABLE</span>
+        </div>
+      </div>
+      
+      <div class="dossier-section">
+        <span class="dossier-section-title">SECTOR INTEL</span>
+        <div class="telemetry-row">
+          <span class="telemetry-label">SECTOR STABILITY:</span>
+          <span class="telemetry-val" style="color: var(--neon-green)">99.98%</span>
+        </div>
+        <div class="telemetry-row">
+          <span class="telemetry-label">DATA INTEGRITY:</span>
+          <span class="telemetry-val" style="color: var(--neon-green)">NOMINAL</span>
+        </div>
+        <div class="telemetry-row">
+          <span class="telemetry-label">THREAT MATRIX:</span>
+          <span class="telemetry-val" style="color: #ff5f00">ZERO_ALERT</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- HUD Physics Adjustments Panel -->
+  <section class="hud-control-panel">
+    <div class="control-panel-header">PHYSICS_ENGINE_CNTRL</div>
+    <div class="control-panel-content">
+      
+      <div class="control-group">
+        <div class="control-label-row">
+          <span class="control-label">ANTI-GRAVITY LEVEL</span>
+          <span class="control-value" id="val-gravity">1.5x</span>
+        </div>
+        <input type="range" id="param-gravity" min="0" max="5" step="0.1" value="1.5">
+      </div>
+      
+      <div class="control-group">
+        <div class="control-label-row">
+          <span class="control-label">REPULSION (CHARGE)</span>
+          <span class="control-value" id="val-charge">-300</span>
+        </div>
+        <input type="range" id="param-charge" min="-1000" max="-100" step="50" value="-300">
+      </div>
+      
+      <div class="control-group">
+        <div class="control-label-row">
+          <span class="control-label">LINK DISTANCE</span>
+          <span class="control-value" id="val-distance">150</span>
+        </div>
+        <input type="range" id="param-distance" min="80" max="250" step="10" value="150">
+      </div>
+
+      <div class="control-group">
+        <div class="control-label-row">
+          <span class="control-label">SPRING TENSION</span>
+          <span class="control-value" id="val-tension">0.5</span>
+        </div>
+        <input type="range" id="param-tension" min="0.1" max="1" step="0.05" value="0.5">
+      </div>
+
+      <div class="control-group">
+        <div class="control-label-row">
+          <span class="control-label">DAMPING EFFECT</span>
+          <span class="control-value" id="val-damping">0.4</span>
+        </div>
+        <input type="range" id="param-damping" min="0.1" max="0.9" step="0.05" value="0.4">
+      </div>
+
+      <button class="control-btn" id="btn-reset-physics">Reset Simulator</button>
+      <button class="control-btn" id="btn-expand-all">Expand All Sectors</button>
+    </div>
+  </section>
+
+  <!-- HUD Footer Systems Readout -->
+  <footer class="hud-footer">
+    <div class="footer-item">
+      <span>GRID_SEC: ALPHA-4</span>
+      <span class="footer-coord" id="mouse-coords">CURSOR // X: 0.00 Y: 0.00</span>
+    </div>
+    <div class="footer-item">
+      <span id="simulator-fps">FPS: 60.00</span>
+      <span>SYSTEM STATUS: OK</span>
+    </div>
+  </footer>
+
+  <!-- Loading External Libraries (D3 for Force Engine, GSAP for Elastic Easing) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  
+  <!-- Interactive Operations Logic -->
+  <script src="Mind.js"></script>
+</body>
+</html>

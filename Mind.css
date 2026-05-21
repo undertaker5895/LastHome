@@ -1,0 +1,786 @@
+/* Google Fonts for Futuristic HUD UI */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --neon-cyan: #00ffff;
+  --neon-purple: #bd00ff;
+  --neon-green: #39ff14;
+  --neon-orange: #ff5f00;
+  --hud-bg: rgba(10, 15, 30, 0.45);
+  --hud-bg-solid: rgba(10, 15, 30, 0.85);
+  --hud-border: rgba(0, 255, 255, 0.25);
+  --hud-text: #e0faff;
+  --hud-glow-cyan: rgba(0, 255, 255, 0.45);
+  --hud-glow-purple: rgba(189, 0, 255, 0.45);
+  --font-family-hud: 'Rajdhani', -apple-system, sans-serif;
+  --font-family-title: 'Orbitron', sans-serif;
+  --font-family-mono: 'Share+Tech+Mono', monospace;
+}
+
+/* Reset and Global Setup */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #030611;
+  color: var(--hud-text);
+  font-family: var(--font-family-hud);
+  font-size: 16px;
+}
+
+/* Background Cybernetic Elements */
+.hud-bg-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hud-radar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at center, transparent 30%, rgba(2, 4, 10, 0.7) 80%),
+    radial-gradient(circle at center, rgba(0, 255, 255, 0.02) 0%, rgba(0, 255, 255, 0) 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Rotating Radar Graphic behind the mindmap */
+.hud-radar-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.15;
+}
+
+.hud-radar-circle.outer {
+  width: 700px;
+  height: 700px;
+  border: 1px dashed var(--neon-cyan);
+  animation: rotate-cw 60s linear infinite;
+}
+
+.hud-radar-circle.mid {
+  width: 450px;
+  height: 450px;
+  border: 1px dotted var(--neon-purple);
+  animation: rotate-ccw 40s linear infinite;
+}
+
+.hud-radar-circle.inner {
+  width: 250px;
+  height: 250px;
+  border: 1px double rgba(0, 255, 255, 0.3);
+  animation: rotate-cw 20s linear infinite;
+}
+
+/* Global HUD UI Overlays (Borders & Readouts) */
+.hud-corner-bracket {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: rgba(0, 255, 255, 0.6);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 10;
+}
+.hud-corner-bracket.top-left { top: 20px; left: 20px; border-width: 2px 0 0 2px; }
+.hud-corner-bracket.top-right { top: 20px; right: 20px; border-width: 2px 2px 0 0; }
+.hud-corner-bracket.bottom-left { bottom: 20px; left: 20px; border-width: 0 0 2px 2px; }
+.hud-corner-bracket.bottom-right { bottom: 20px; right: 20px; border-width: 0 2px 2px 0; }
+
+.hud-header {
+  position: absolute;
+  top: 25px;
+  left: 50px;
+  right: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.hud-title-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.hud-title-main {
+  font-family: var(--font-family-title);
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 0 0 10px var(--hud-glow-cyan);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hud-title-main::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan);
+  border-radius: 50%;
+}
+
+.hud-title-sub {
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  color: var(--neon-cyan);
+  margin-top: 4px;
+}
+
+.hud-system-status {
+  font-family: var(--font-family-mono);
+  font-size: 0.8rem;
+  color: var(--neon-green);
+  text-shadow: 0 0 5px var(--neon-green);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-status-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--neon-green);
+  border-radius: 50%;
+  animation: blink 1s ease-in-out infinite alternate;
+}
+
+/* Scanline Overlay Effect */
+.hud-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 255, 255, 0) 0%,
+    rgba(0, 255, 255, 0) 48%,
+    rgba(0, 255, 255, 0.05) 50%,
+    rgba(0, 255, 255, 0) 52%,
+    rgba(0, 255, 255, 0) 100%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.3;
+}
+
+.hud-scanline-sweep {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 255, 255, 0) 0%,
+    rgba(0, 255, 255, 0.04) 40%,
+    rgba(0, 255, 255, 0.08) 80%,
+    rgba(0, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 101;
+  animation: scan-down 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* 3D Viewport Rig */
+.viewport-3d {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+  overflow: hidden;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mindmap-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* SVG Connection Lines overlay */
+.mindmap-svg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.connection-link {
+  fill: none;
+  stroke: rgba(0, 255, 255, 0.15);
+  stroke-width: 1.5px;
+  transition: stroke 0.3s;
+}
+
+.connection-link-flow {
+  fill: none;
+  stroke: url(#line-grad-cyan);
+  stroke-width: 2.5px;
+  stroke-linecap: round;
+  stroke-dasharray: 10 30;
+  animation: stroke-flow 3s linear infinite;
+  filter: drop-shadow(0 0 3px var(--neon-cyan));
+}
+
+.connection-link.parent-active {
+  stroke: rgba(189, 0, 255, 0.3);
+}
+
+.connection-link-flow.parent-active {
+  stroke: url(#line-grad-purple);
+  filter: drop-shadow(0 0 3px var(--neon-purple));
+  animation: stroke-flow 2.5s linear infinite;
+}
+
+/* Glassmorphism Hologram Node Cards */
+.mindmap-node {
+  position: absolute;
+  width: 190px;
+  height: 130px;
+  transform-style: preserve-3d;
+  z-index: 3;
+  /* 꼼수로 주었던 클릭 강제확장 패딩을 제거하여 사각형과 100% 일치시킵니다. */
+  padding: 0;
+  margin: 0;
+}
+
+/* Size modifications depending on hierarchy level */
+.mindmap-node.node-level-0 {
+  width: 220px;
+  height: 155px;
+  z-index: 5;
+}
+
+.mindmap-node.node-level-1 {
+  width: 195px;
+  height: 125px;
+  z-index: 4;
+}
+
+.mindmap-node.node-level-2 {
+  width: 175px;
+  height: 108px;
+}
+
+/* 이제 이 사각형 자체가 온전한 클릭 범위가 됩니다 */
+.node-card {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  padding: 12px;
+  background: rgba(10, 15, 30, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(0, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: 
+    transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+  transform-style: preserve-3d;
+  pointer-events: all;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Neon glows based on levels */
+.mindmap-node.node-level-0 .node-card {
+  border-color: rgba(189, 0, 255, 0.4);
+  box-shadow: 0 0 10px rgba(189, 0, 255, 0.15), inset 0 0 5px rgba(189, 0, 255, 0.1);
+  background: rgba(20, 10, 35, 0.5);
+}
+
+.mindmap-node.node-level-1 .node-card {
+  border-color: rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.15), inset 0 0 5px rgba(0, 255, 255, 0.1);
+}
+
+.mindmap-node.node-level-2 .node-card {
+  border-color: rgba(0, 255, 255, 0.15);
+}
+
+/* Hover Zoom & TranslateZ (3D Parallax POP) */
+.node-card:hover {
+  transform: translateZ(30px) scale(1.05);
+  background: rgba(15, 25, 50, 0.72);
+}
+
+.mindmap-node.node-level-0 .node-card:hover {
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 24px rgba(189, 0, 255, 0.55), inset 0 0 12px rgba(189, 0, 255, 0.2);
+}
+
+.mindmap-node.node-level-1 .node-card:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 24px rgba(0, 255, 255, 0.55), inset 0 0 12px rgba(0, 255, 255, 0.2);
+}
+
+.mindmap-node.node-level-2 .node-card:hover {
+  border-color: var(--neon-green);
+  box-shadow: 0 0 18px rgba(57, 255, 20, 0.45), inset 0 0 10px rgba(57, 255, 20, 0.18);
+}
+
+/* Click / Active feedback pulse animation */
+.node-card:active {
+  transform: translateZ(20px) scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* Parallax Inner Image Container */
+.node-image-container {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: rgba(0, 255, 255, 0.03);
+  border: 1px dashed rgba(0, 255, 255, 0.1);
+  transform-style: preserve-3d;
+  transition: border-color 0.3s, background 0.3s;
+  pointer-events: none; /* 내부 요소가 클릭을 가로채지 않게 함 */
+}
+
+.mindmap-node.node-level-0 .node-image-container {
+  height: 55%;
+  background: rgba(189, 0, 255, 0.05);
+  border-color: rgba(189, 0, 255, 0.15);
+}
+
+.node-card:hover .node-image-container {
+  border-color: rgba(0, 255, 255, 0.35);
+  background: rgba(0, 255, 255, 0.08);
+}
+
+.mindmap-node.node-level-0 .node-card:hover .node-image-container {
+  border-color: rgba(189, 0, 255, 0.4);
+  background: rgba(189, 0, 255, 0.1);
+}
+
+.mindmap-node.node-level-2 .node-card:hover .node-image-container {
+  border-color: rgba(57, 255, 20, 0.3);
+}
+
+.node-image {
+  max-height: 80%;
+  max-width: 80%;
+  object-fit: contain;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  filter: drop-shadow(0 0 3px rgba(0, 255, 255, 0.3));
+}
+
+.mindmap-node.node-level-0 .node-image {
+  filter: drop-shadow(0 0 5px rgba(189, 0, 255, 0.5));
+}
+
+.node-card:hover .node-image {
+  transform: scale(1.15) translateZ(15px);
+}
+
+/* Node Text Styles */
+.node-title {
+  font-family: var(--font-family-hud);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  pointer-events: none; /* 텍스트가 클릭 방해하는 것 방지 */
+}
+
+.node-level-0 .node-title { font-size: 0.95rem; }
+.node-level-1 .node-title { font-size: 0.85rem; }
+.node-level-2 .node-title { font-size: 0.8rem; }
+
+.node-desc {
+  font-size: 0.65rem;
+  color: var(--neon-cyan);
+  opacity: 0.85;
+  margin-top: 2px;
+  display: none;
+}
+
+.node-level-2 .node-desc {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/* Active Node Highlights (when clicked/focused) */
+.node-card.active {
+  border-color: var(--neon-cyan) !important;
+  border-width: 2px !important;
+  box-shadow: 0 0 30px var(--neon-cyan), 0 0 60px rgba(0,255,255,0.15), inset 0 0 14px rgba(0, 255, 255, 0.35) !important;
+  background: rgba(10, 30, 55, 0.85) !important;
+  animation: node-selected-pulse 2s ease-in-out infinite;
+}
+
+.node-level-0 .node-card.active {
+  border-color: var(--neon-purple) !important;
+  box-shadow: 0 0 30px var(--neon-purple), 0 0 60px rgba(189,0,255,0.15), inset 0 0 14px rgba(189, 0, 255, 0.35) !important;
+  background: rgba(30, 10, 50, 0.85) !important;
+  animation: node-selected-pulse-purple 2s ease-in-out infinite;
+}
+
+@keyframes node-selected-pulse {
+  0%, 100% { box-shadow: 0 0 30px var(--neon-cyan), inset 0 0 14px rgba(0,255,255,0.35); }
+  50% { box-shadow: 0 0 45px var(--neon-cyan), 0 0 80px rgba(0,255,255,0.2), inset 0 0 20px rgba(0,255,255,0.5); }
+}
+
+@keyframes node-selected-pulse-purple {
+  0%, 100% { box-shadow: 0 0 30px var(--neon-purple), inset 0 0 14px rgba(189,0,255,0.35); }
+  50% { box-shadow: 0 0 45px var(--neon-purple), 0 0 80px rgba(189,0,255,0.2), inset 0 0 20px rgba(189,0,255,0.5); }
+}
+
+/* --- HUD Interface Panels --- */
+.hud-sidebar {
+  position: absolute;
+  top: 100px;
+  left: 30px;
+  bottom: 30px;
+  width: 320px;
+  background: var(--hud-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--hud-border);
+  border-radius: 8px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  box-shadow: 0 0 20px rgba(0, 4, 10, 0.5);
+}
+
+.hud-sidebar.collapsed {
+  transform: translateX(-350px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar-header {
+  padding: 15px;
+  border-bottom: 1px solid var(--hud-border);
+  background: rgba(0, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-title {
+  font-family: var(--font-family-title);
+  font-size: 0.9rem;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--hud-glow-cyan);
+}
+
+.sidebar-close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: var(--font-family-mono);
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+.sidebar-close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan);
+}
+
+.sidebar-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dossier-node-type {
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  color: var(--neon-purple);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.dossier-node-name {
+  font-family: var(--font-family-title);
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.dossier-node-desc {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  border-left: 2px solid var(--neon-cyan);
+  padding-left: 10px;
+}
+
+.dossier-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dossier-section-title {
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  color: var(--neon-cyan);
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.15);
+  padding-bottom: 4px;
+  margin-top: 10px;
+}
+
+.telemetry-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+}
+
+.telemetry-label {
+  color: #5a7290;
+}
+
+.telemetry-val {
+  color: #fff;
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.telemetry-val.accent {
+  color: var(--neon-cyan);
+}
+
+.hud-control-panel {
+  position: absolute;
+  top: 100px;
+  right: 30px;
+  width: 280px;
+  background: var(--hud-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--hud-border);
+  border-radius: 8px;
+  z-index: 10;
+  box-shadow: 0 0 20px rgba(0, 4, 10, 0.5);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.control-panel-header {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--hud-border);
+  background: rgba(0, 255, 255, 0.05);
+  font-family: var(--font-family-title);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--hud-glow-cyan);
+}
+
+.control-panel-content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-family-mono);
+  font-size: 0.7rem;
+}
+
+.control-label {
+  color: #5a7290;
+  text-transform: uppercase;
+}
+
+.control-value {
+  color: var(--neon-cyan);
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: rgba(0, 255, 255, 0.15);
+  border-radius: 2px;
+  border: 1px solid rgba(0, 255, 255, 0.1);
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -5px;
+  transition: transform 0.1s;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+}
+
+.control-btn {
+  width: 100%;
+  background: rgba(0, 255, 255, 0.08);
+  border: 1px solid var(--hud-border);
+  border-radius: 4px;
+  color: #fff;
+  font-family: var(--font-family-title);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+.control-btn:hover {
+  background: rgba(0, 255, 255, 0.2);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.hud-footer {
+  position: absolute;
+  bottom: 25px;
+  left: 50px;
+  right: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  color: #5a7290;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.footer-item {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-coord {
+  color: rgba(0, 255, 255, 0.4);
+}
+
+@keyframes scan-down {
+  0% { transform: translateY(-100px); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes rotate-cw {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes rotate-ccw {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
+@keyframes blink {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+@keyframes stroke-flow {
+  0% { stroke-dashoffset: 200; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.sidebar-content::-webkit-scrollbar { width: 4px; }
+.sidebar-content::-webkit-scrollbar-track { background: rgba(0, 255, 255, 0.02); }
+.sidebar-content::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.2); border-radius: 2px; }
+.sidebar-content::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 255, 0.4); }
