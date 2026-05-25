@@ -784,3 +784,142 @@ input[type=range]::-webkit-slider-thumb:hover {
 .sidebar-content::-webkit-scrollbar-track { background: rgba(0, 255, 255, 0.02); }
 .sidebar-content::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.2); border-radius: 2px; }
 .sidebar-content::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 255, 0.4); }
+
+/* Physics Toggle Button Styles */
+.control-btn-toggle {
+  display: none; /* Hide by default on desktop */
+  background: rgba(0, 255, 255, 0.08);
+  border: 1px solid var(--hud-border);
+  border-radius: 4px;
+  color: #fff;
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+}
+.control-btn-toggle:hover, .control-btn-toggle.active-btn {
+  background: rgba(0, 255, 255, 0.2);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+/* 모바일 최적화 (768px 이하) */
+@media (max-width: 768px) {
+  /* Show Physics Controls Toggle Button */
+  .control-btn-toggle {
+    display: inline-block !important;
+  }
+
+  /* Header scaling */
+  .hud-header {
+    top: 15px !important;
+    left: 20px !important;
+    right: 20px !important;
+    padding: 0 !important;
+  }
+  
+  .hud-title-main {
+    font-size: 1.05rem !important;
+    gap: 6px !important;
+  }
+  
+  .hud-title-main::before {
+    width: 6px !important;
+    height: 6px !important;
+  }
+  
+  .hud-title-sub {
+    font-size: 0.6rem !important;
+    letter-spacing: 0.5px !important;
+  }
+  
+  .hud-system-status {
+    font-size: 0.7rem !important;
+    gap: 6px !important;
+  }
+  
+  /* Hide static telemetry link readouts to avoid overflow */
+  .hud-system-status span:nth-child(4),
+  .hud-system-status span:nth-child(5) {
+    display: none !important;
+  }
+
+  /* Footer scaling */
+  .hud-footer {
+    left: 20px !important;
+    right: 20px !important;
+    bottom: 15px !important;
+    font-size: 0.65rem !important;
+  }
+  
+  .hud-footer .footer-item:last-child {
+    display: none !important; /* Hide secondary coords text */
+  }
+
+  /* Telemetry Sidebar -> Bottom Sheet */
+  .hud-sidebar {
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 38vh !important;
+    border-radius: 12px 12px 0 0 !important;
+    border-width: 1px 0 0 0 !important;
+    transform: translateY(0) !important;
+    z-index: 1000 !important;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  .hud-sidebar.collapsed {
+    transform: translateY(100%) !important;
+    opacity: 0 !important;
+  }
+  
+  .sidebar-header {
+    padding: 10px 15px !important;
+  }
+  
+  .sidebar-content {
+    padding: 15px !important;
+    gap: 12px !important;
+  }
+  
+  .dossier-node-name {
+    font-size: 1.05rem !important;
+  }
+  
+  .dossier-node-desc {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  .dossier-section-title {
+    margin-top: 5px !important;
+  }
+
+  /* Physics Control Panel -> Collapsible Dropdown Drawer */
+  .hud-control-panel {
+    top: 75px !important;
+    right: 20px !important;
+    left: 20px !important;
+    width: calc(100% - 40px) !important;
+    max-height: 60vh !important;
+    overflow-y: auto !important;
+    transform: translateY(-20px) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: 999 !important;
+    border-color: rgba(0, 255, 255, 0.4) !important;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.9) !important;
+  }
+  
+  .hud-control-panel.active {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+}

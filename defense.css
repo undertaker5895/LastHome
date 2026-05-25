@@ -377,3 +377,109 @@ main {
     padding: 15px 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s;
 }
 .auth-btn:hover { background: #ff0055; box-shadow: 0 0 20px #ff0055; }
+
+/* 모바일 최적화 (768px 이하) */
+@media (max-width: 768px) {
+    header {
+        padding: 15px 4% !important;
+    }
+    
+    .logo {
+        font-size: 1.3rem !important;
+        letter-spacing: 2px !important;
+    }
+    
+    .cart-btn {
+        padding: 8px 16px !important;
+        gap: 8px !important;
+        font-size: 0.8rem !important;
+    }
+    
+    main {
+        padding-top: 100px !important;
+    }
+    
+    .grid-container {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+        padding: 20px !important;
+    }
+    
+    .product-card {
+        animation: none !important; /* 모바일에서 3D 부유 애니메이션 비활성화 (성능 향상) */
+        transform: none !important;
+        padding: 20px !important;
+        gap: 15px !important;
+    }
+    
+    .product-card:hover {
+        transform: none !important;
+        box-shadow: none !important;
+        border-color: var(--glass-border) !important;
+    }
+    
+    .card-image-hud {
+        height: 160px !important;
+    }
+    
+    .product-name {
+        font-size: 1.05rem !important;
+        height: auto !important;
+        display: block !important;
+    }
+    
+    .price {
+        font-size: 1.25rem !important;
+    }
+    
+    .add-btn {
+        padding: 12px !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* 토스트 알림 모바일 핏 */
+    #toast-container {
+        bottom: 20px !important;
+        right: 15px !important;
+        left: 15px !important;
+        width: auto !important;
+    }
+    
+    .toast {
+        min-width: auto !important;
+        width: 100% !important;
+        padding: 15px 20px !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8) !important;
+    }
+    
+    /* 보안 게이트웨이 모달 및 영수증 핏 */
+    .modal-content-box {
+        padding: 25px 20px !important;
+        margin: 15px !important;
+        width: calc(100% - 30px) !important;
+    }
+    
+    .neon-red {
+        font-size: 1.5rem !important;
+    }
+    
+    .warning-text {
+        font-size: 0.85rem !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .receipt-container {
+        padding: 25px 20px !important;
+        max-width: 100% !important;
+        gap: 15px !important;
+    }
+    
+    .receipt-total {
+        font-size: 1.1rem !important;
+    }
+    
+    .confirm-btn {
+        padding: 14px !important;
+        font-size: 0.95rem !important;
+    }
+}

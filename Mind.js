@@ -211,20 +211,34 @@ const simulation = d3.forceSimulation()
 let selectedNode = rootNode;
 
 // ==========================================
-// 4. MOUSE PARALLAX TILT MATH (3D CAMERA RIG)
+// 4. POINTER PARALLAX TILT & ZOOM TRANSFORMS
 // ==========================================
 let targetTiltX = 0;
 let targetTiltY = 0;
 let curTiltX = 0;
 let curTiltY = 0;
+let zoomTransform = { x: 0, y: 0, k: 1 }; // global zoom state
 
-window.addEventListener('mousemove', (e) => {
-  const normX = (e.clientX / window.innerWidth) - 0.5;
-  const normY = (e.clientY / window.innerHeight) - 0.5;
+function handlePointerMove(clientX, clientY) {
+  const normX = (clientX / window.innerWidth) - 0.5;
+  const normY = (clientY / window.innerHeight) - 0.5;
   targetTiltX = -normY * 4; 
   targetTiltY = normX * 6;
-  document.getElementById('mouse-coords').innerText = `CURSOR // X: ${e.clientX} Y: ${e.clientY}`;
+  const coordEl = document.getElementById('mouse-coords');
+  if (coordEl) {
+    coordEl.innerText = `POINTER // X: ${Math.round(clientX)} Y: ${Math.round(clientY)}`;
+  }
+}
+
+window.addEventListener('mousemove', (e) => {
+  handlePointerMove(e.clientX, e.clientY);
 });
+
+window.addEventListener('touchmove', (e) => {
+  if (e.touches && e.touches.length === 1) {
+    handlePointerMove(e.touches[0].clientX, e.touches[0].clientY);
+  }
+}, { passive: true });
 
 // ==========================================
 // 5. DRAG BEHAVIOR FOR NODES (클릭/드래그 철저 분리)
@@ -448,7 +462,7 @@ function animate() {
   
   curTiltX += (targetTiltX - curTiltX) * 0.08;
   curTiltY += (targetTiltY - curTiltY) * 0.08;
-  mindmapContainerEl.style.transform = `rotateX(${curTiltX}deg) rotateY(${curTiltY}deg)`;
+  mindmapContainerEl.style.transform = `translate3d(${zoomTransform.x}px, ${zoomTransform.y}px, 0px) scale(${zoomTransform.k}) rotateX(${curTiltX}deg) rotateY(${curTiltY}deg)`;
   
   if (selectedNode) {
     const px = selectedNode.x + (selectedNode.floatX || 0);
@@ -532,6 +546,30 @@ function bindControlSliders() {
     d3.selectAll('.node-card').classed('active', false);
     selectedNode = null;
   });
+
+  const toggleControlsBtn = document.getElementById('btn-toggle-controls');
+  if (toggleControlsBtn) {
+    toggleControlsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const panel = document.querySelector('.hud-control-panel');
+      if (panel) {
+        panel.classList.toggle('active');
+        toggleControlsBtn.classList.toggle('active-btn');
+      }
+    });
+  }
+}
+
+function setupZoom() {
+  const zoomBehavior = d3.zoom()
+    .scaleExtent([0.3, 3.0])
+    .on('zoom', (event) => {
+      zoomTransform = event.transform;
+    });
+    
+  d3.select('#viewport-3d')
+    .call(zoomBehavior)
+    .on('dblclick.zoom', null);
 }
 
 window.addEventListener('resize', () => {
@@ -558,6 +596,7 @@ function updateSystemClock() {
 // 10. INITIALIZATION
 // ==========================================
 function init() {
+  setupZoom();
   bindControlSliders();
   updateSystemClock();
   highlightNode(rootNode);
